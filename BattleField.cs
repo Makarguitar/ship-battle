@@ -29,6 +29,10 @@ namespace morskoy_boy
                     {
                         visibleArea[i, j] = '~';
                     }
+                    if (area[i, j] == true)
+                    {
+                        visibleArea[i, j] = 'O';
+                    }
                         
                     areaString += $" {visibleArea[i, j]}";
                 }
@@ -96,9 +100,11 @@ namespace morskoy_boy
 
             for (int i = 0; i < ship.SizeX; i++)
             {
-                for (int j = 0; i < ship.SizeY; j++)
+                for (int j = 0; j < ship.SizeY; j++)
                 {
-
+                    area[coloumn + i, row + j] = true;
+                    int[] coordinata = new int[] { coloumn + i, row + j };
+                    ship.Coords.Add(coordinata);
                 }
             }
         }
