@@ -87,26 +87,51 @@ namespace morskoy_boy
 
             int row, coloumn;
 
-            if (ship.Horizontal)
+            while (true)
             {
-                row = ra.Next(0, 10);
-                coloumn = ra.Next(0, 11 - ship.SizeX);
-            }
-            else
-            {
-                row = ra.Next(0, 11 - ship.SizeY);
-                coloumn = ra.Next(0, 10);
-            }
-
-            for (int i = 0; i < ship.SizeX; i++)
-            {
-                for (int j = 0; j < ship.SizeY; j++)
+                if (ship.Horizontal)
                 {
-                    area[coloumn + i, row + j] = true;
-                    int[] coordinata = new int[] { coloumn + i, row + j };
-                    ship.Coords.Add(coordinata);
+                    row = ra.Next(0, 10);
+                    coloumn = ra.Next(0, 11 - ship.SizeX);
+                }
+                else
+                {
+                    row = ra.Next(0, 11 - ship.SizeY);
+                    coloumn = ra.Next(0, 10);
+                }
+
+                if (CheckPlacement(coloumn, row, ship) == true)
+                {
+                    for (int i = 0; i < ship.SizeX; i++)
+                    {
+                        for (int j = 0; j < ship.SizeY; j++)
+                        {
+                            area[coloumn + i, row + j] = true;
+                            int[] coordinata = new int[] { coloumn + i, row + j };
+                            ship.Coords.Add(coordinata);
+                        }
+                    }
+                    break;
                 }
             }
+        }
+
+        bool CheckPlacement(int coloumn, int row, Ship ship)
+        {
+            for (int i = coloumn - 1; i <= coloumn + ship.SizeX; i++)
+            {
+                for (int j = row - 1; j <= row + ship.SizeY; j++)
+                {
+                    if (i >= 0 && i < 10 && j >= 0 && j < 10)
+                    {
+                        if (area[i, j] == true)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }
