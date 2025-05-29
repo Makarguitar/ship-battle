@@ -7,6 +7,20 @@
             BattleField area = new BattleField();
             area.PlaceShips(); 
             area.Print();
+            int turns = 30;
+
+            for(int turn = 0; turn < turns; turn++)
+            {
+                Console.WriteLine($"Turns left: {turns - turn}");
+                Console.WriteLine("Commander, where do we shoot???");
+                string input = Console.ReadLine();
+                Console.WriteLine($"Flatz! We shoot {input}, FIRE!");
+                if (area.ShootAtAll(input) == true)
+                {
+                    turn--;
+                }
+                area.Print();
+            }
         }
 
     }

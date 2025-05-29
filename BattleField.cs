@@ -8,7 +8,7 @@ namespace morskoy_boy
 {
     class BattleField
     {
-        string[] letters = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
+        List<string> letters = new List<string> { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J" };
 
         char[,] visibleArea = new char[10, 10];
 
@@ -132,6 +132,35 @@ namespace morskoy_boy
                 }
             }
             return true;
+        }
+
+        public bool ShootAtAll(string location)
+        {
+            var letter = location[0].ToString().ToUpper();
+            var row = letters.IndexOf(letter);
+            var coloumn = int.Parse(location[1].ToString());
+
+            if (area[row, coloumn] == true)
+            {
+                foreach(Ship ship in ships)
+                {
+                    foreach (int[] coordinata in ship.Coords)
+                    {
+                        if (coordinata[0] == row && coordinata[1] == coloumn)
+                        {
+                            ship.ShotCoords.Add(coordinata);
+                            area[row, coloumn] = false;
+                            if (ship.Coords.Count == ship.ShotCoords.Count)
+                            {
+
+                            }
+                            visibleArea[row, coloumn] = 'X';
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
