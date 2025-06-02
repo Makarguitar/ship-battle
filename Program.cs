@@ -15,6 +15,7 @@
                 Console.WriteLine("Commander, where do we shoot???");
                 string input = Console.ReadLine();
                 Console.WriteLine($"Flatz! We shoot {input}, FIRE!");
+                Console.Clear();
                 if (area.ShootAtAll(input) == true)
                 {
                     turn--;
