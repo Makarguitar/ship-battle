@@ -14,7 +14,7 @@ namespace morskoy_boy
 
         bool[,] area = new bool[10, 10];
 
-        List<Ship> ships = new List<Ship>();
+        public List<Ship> ships = new List<Ship>();
 
         public void Print()
         {

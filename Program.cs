@@ -12,6 +12,7 @@
             for(int turn = 0; turn < turns; turn++)
             {
                 Console.WriteLine($"Turns left: {turns - turn}");
+                Console.WriteLine($"Ships left: {area.ships.Count}");
                 Console.WriteLine("Commander, where do we shoot???");
                 string input = Console.ReadLine();
                 Console.WriteLine($"Flatz! We shoot {input}, FIRE!");
