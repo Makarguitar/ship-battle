@@ -22,6 +22,11 @@
                     turn--;
                 }
                 area.Print();
+                if (area.CheckVictory())
+                {
+                    Console.WriteLine("Flatz! We Have won this battle!");
+                    break;
+                }
             }
         }
 

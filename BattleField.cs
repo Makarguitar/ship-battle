@@ -29,10 +29,13 @@ namespace morskoy_boy
                     {
                         visibleArea[i, j] = '~';
                     }
-                    if (area[i, j] == true)
-                    {
-                        visibleArea[i, j] = 'O';
-                    }
+
+                    //this 'if' is made to see the ships
+
+                    //if (area[i, j] == true)
+                    //{
+                    //    visibleArea[i, j] = 'O';
+                    //}
                         
                     areaString += $" {visibleArea[i, j]}";
                 }
@@ -136,41 +139,49 @@ namespace morskoy_boy
 
         public bool ShootAtAll(string location)
         {
-            var letter = location[0].ToString().ToUpper();
-            var row = letters.IndexOf(letter);
-            var coloumn = int.Parse(location[1].ToString());
-
-            if (area[row, coloumn] == true)
+            try
             {
-                foreach(Ship ship in ships)
+                var letter = location[0].ToString().ToUpper();
+                var row = letters.IndexOf(letter);
+                var coloumn = int.Parse(location[1].ToString());
+
+                if (area[row, coloumn] == true)
                 {
-                    foreach (int[] coordinata in ship.Coords)
+                    foreach (Ship ship in ships)
                     {
-                        if (coordinata[0] == row && coordinata[1] == coloumn)
+                        foreach (int[] coordinata in ship.Coords)
                         {
-                            ship.ShotCoords.Add(coordinata);
-                            area[row, coloumn] = false;
-                            if (ship.Coords.Count == ship.ShotCoords.Count)
+                            if (coordinata[0] == row && coordinata[1] == coloumn)
                             {
-                                Console.WriteLine("Flatz! That Target is going down!");
-                                ShipKilled(ship);
+                                ship.ShotCoords.Add(coordinata);
+                                area[row, coloumn] = false;
+                                if (ship.Coords.Count == ship.ShotCoords.Count)
+                                {
+                                    Console.WriteLine("Flatz! That Target is going down!");
+                                    ShipKilled(ship);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("We got a hit!");
+                                    visibleArea[row, coloumn] = 'X';
+                                }
+                                return true;
                             }
-                            else
-                            {
-                                Console.WriteLine("We got a hit!");
-                                visibleArea[row, coloumn] = 'X';
-                            }
-                            return true;
                         }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Uhhh, No hit! Flatz, where are you shooting?????");
+                    visibleArea[row, coloumn] = '@';
+                    return false;
+                }
             }
-            else
+            catch
             {
-                Console.WriteLine("Uhhh, No hit! Flatz, where are you shooting?????");
-                visibleArea[row, coloumn] = '@';
-                return false;
+                Console.WriteLine("wrong input, yuo lost a turn :?");
             }
+            
             return false;
         }
 
@@ -191,6 +202,11 @@ namespace morskoy_boy
             {
                 visibleArea[coord[0], coord[1]] = '+';
             }
+        }
+
+        public bool CheckVictory()
+        {
+            return ships.Count == 0;
         }
     }
 }
